@@ -1,5 +1,6 @@
 package com.ftc5466.tarso;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,10 +19,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
+    TarsoUser user;
 
     private Fragment[] fragments = {new ViewFragment(), new AddFragment()};
 
@@ -41,6 +44,27 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+        user = TarsoUser.getInstance();
+        user.setup(this);
+
+        if (user.firstTime) {
+            Intent setupIntent = new Intent(MainActivity.this, SetupActivity.class);
+            startActivityForResult(setupIntent, 1);
+        } else {
+            welcomeUser();
+        }
+    }
+
+    private void welcomeUser() {
+        String welcome = "Welcome, " + TarsoUser.getInstance().firstName + "!";
+        Toast.makeText(this, welcome, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        welcomeUser();
     }
 
     @Override
