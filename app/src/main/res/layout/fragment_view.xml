@@ -8,4 +8,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.ftc5466.tarso.MainActivity$PlaceholderFragment">
 
+    <ExpandableListView
+        android:id="@+id/expandable_list_view_data_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </RelativeLayout>
