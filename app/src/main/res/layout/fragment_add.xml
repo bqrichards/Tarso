@@ -74,7 +74,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="Number of Glyphs in cryptograph"
+                    android:hint="Number of Glyphs scored"
                     android:inputType="number" />
 
                 <CheckBox
