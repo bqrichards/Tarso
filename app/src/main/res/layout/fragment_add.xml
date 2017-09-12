@@ -108,37 +108,27 @@
                     android:hint="Number of Glyphs scored"
                     android:inputType="number" />
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView"
-                    tools:text="Do you go for:" />
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
-                <RadioGroup
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <RadioButton
-                        android:id="@+id/radioButton4"
+                    <CheckBox
+                        android:id="@+id/teleop_rows_checkbox"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Rows" />
 
-                    <RadioButton
-                        android:id="@+id/radioButton3"
+                    <CheckBox
+                        android:id="@+id/teleop_columns_checkbox"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Columns" />
 
-                    <RadioButton
-                        android:id="@+id/radioButton2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Doesn't matter" />
-                </RadioGroup>
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -176,35 +166,36 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Relic upright?" />
+
                 </LinearLayout>
 
-                <RadioGroup
-                    android:id="@+id/endgame_relic_zone_radiogroup"
-                    android:orientation="horizontal"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
-                    <RadioButton
-                        android:id="@+id/radioButton7"
+                    <CheckBox
+                        android:id="@+id/endgame_relic_zone_10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="10" />
 
-                    <RadioButton
-                        android:id="@+id/radioButton6"
+                    <CheckBox
+                        android:id="@+id/endgame_relic_zone_20"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="20" />
 
-                    <RadioButton
-                        android:id="@+id/radioButton5"
+                    <CheckBox
+                        android:id="@+id/endgame_relic_zone_40"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="40" />
-                </RadioGroup>
+                </LinearLayout>
 
                 <CheckBox
                     android:id="@+id/endgame_balanced_end_checkbox"
