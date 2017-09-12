@@ -110,9 +110,17 @@ public class AddFragment extends Fragment implements CompoundButton.OnCheckedCha
         teamNameEditText.setText("");
         teamNumberEditText.setText("");
 
-        // Autonomous - TODO
+        // Autonomous
+        knockJewelCheckBox.setChecked(false);
+        scanPictographCheckBox.setChecked(false);
+        numberOfAutonomousGlyphsEditText.setText("");
+        safeZoneCheckBox.setChecked(false);
 
-        // TeleOp - TODO
+        // TeleOp
+        numberOfTeleOpGlyphsEditText.setText("");
+        for (CheckBox checkBox : glyphsStrategyTeleOp) {
+            checkBox.setChecked(false);
+        }
 
         // End Game
         recoverRelicCheckBox.setChecked(false);
