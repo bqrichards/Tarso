@@ -22,6 +22,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ftc5466.tarso.db.TarsoContract;
+import com.ftc5466.tarso.db.TarsoDbHelper;
+
 public class MainActivity extends AppCompatActivity {
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;

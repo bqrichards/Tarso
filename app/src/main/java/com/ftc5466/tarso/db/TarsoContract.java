@@ -36,21 +36,21 @@ public final class TarsoContract {
                 "CREATE TABLE " + TeamEntry.TABLE_NAME + " (" +
                 TeamEntry._ID + " INTEGER PRIMARY KEY," +
                 TeamEntry.COLUMN_NAME_TEAM_NAME + " TEXT," +
-                TeamEntry.COLUMN_NAME_TEAM_NUMBER + " INTEGER" +
+                TeamEntry.COLUMN_NAME_TEAM_NUMBER + " INTEGER," +
 
-                TeamEntry.COLUMN_NAME_AUTONOMOUS_CAN_KNOCK_JEWEL + " INTEGER" +
-                TeamEntry.COLUMN_NAME_AUTONOMOUS_CAN_SCAN_PICTOGRAPH + " INTEGER" +
-                TeamEntry.COLUMN_NAME_AUTONOMOUS_NUMBER_OF_GLYPHS + " INTEGER" +
-                TeamEntry.COLUMN_NAME_AUTONOMOUS_CAN_PARK_SAFE_ZONE + " INTEGER" +
+                TeamEntry.COLUMN_NAME_AUTONOMOUS_CAN_KNOCK_JEWEL + " INTEGER," +
+                TeamEntry.COLUMN_NAME_AUTONOMOUS_CAN_SCAN_PICTOGRAPH + " INTEGER," +
+                TeamEntry.COLUMN_NAME_AUTONOMOUS_NUMBER_OF_GLYPHS + " INTEGER," +
+                TeamEntry.COLUMN_NAME_AUTONOMOUS_CAN_PARK_SAFE_ZONE + " INTEGER," +
 
-                TeamEntry.COLUMN_NAME_TELEOP_NUMBER_OF_GLYPHS + " INTEGER" +
-                TeamEntry.COLUMN_NAME_TELEOP_GLYPH_STRATEGY_ROWS + " INTEGER" +
-                TeamEntry.COLUMN_NAME_TELEOP_GLYPH_STRATEGY_COLUMNS + " INTEGER" +
-                TeamEntry.COLUMN_NAME_ENDGAME_CAN_RECOVER_RELIC + " INTEGER" +
-                TeamEntry.COLUMN_NAME_ENDGAME_RELIC_UPRIGHT + " INTEGER" +
-                TeamEntry.COLUMN_NAME_ENDGAME_RELIC_ZONE_1 + " INTEGER" +
-                TeamEntry.COLUMN_NAME_ENDGAME_RELIC_ZONE_2 + " INTEGER" +
-                TeamEntry.COLUMN_NAME_ENDGAME_RELIC_ZONE_3 + " INTEGER" +
+                TeamEntry.COLUMN_NAME_TELEOP_NUMBER_OF_GLYPHS + " INTEGER," +
+                TeamEntry.COLUMN_NAME_TELEOP_GLYPH_STRATEGY_ROWS + " INTEGER," +
+                TeamEntry.COLUMN_NAME_TELEOP_GLYPH_STRATEGY_COLUMNS + " INTEGER," +
+                TeamEntry.COLUMN_NAME_ENDGAME_CAN_RECOVER_RELIC + " INTEGER," +
+                TeamEntry.COLUMN_NAME_ENDGAME_RELIC_UPRIGHT + " INTEGER," +
+                TeamEntry.COLUMN_NAME_ENDGAME_RELIC_ZONE_1 + " INTEGER," +
+                TeamEntry.COLUMN_NAME_ENDGAME_RELIC_ZONE_2 + " INTEGER," +
+                TeamEntry.COLUMN_NAME_ENDGAME_RELIC_ZONE_3 + " INTEGER," +
                 TeamEntry.COLUMN_NAME_ENDGAME_BALANCE + " INTEGER);";
 
         public static final String SQL_DELETE_ENTRIES =
