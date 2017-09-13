@@ -7,8 +7,7 @@ import android.content.SharedPreferences;
 import java.util.UUID;
 
 public class TarsoUser {
-    private static final TarsoUser INSTANCE = new TarsoUser();
-    private SharedPreferences sharedPreferences;
+    private static SharedPreferences sharedPreferences;
 
     private static final String ID_KEY = "TarsoUUID";
     private static final String FIRST_NAME_KEY = "TarsoFirstName";
@@ -16,19 +15,15 @@ public class TarsoUser {
     private static final String TEAM_NUMBER_KEY = "TarsoTeamNumber";
     private static final String FIRST_TIME_KEY = "TarsoFirstTime";
 
-    String id;
-    String firstName;
-    String teamName;
-    int teamNumber;
-    boolean firstTime;
+    static String id;
+    static String firstName;
+    static String teamName;
+    static int teamNumber;
+    static boolean firstTime;
 
     private TarsoUser() {}
 
-    public static TarsoUser getInstance() {
-        return INSTANCE;
-    }
-
-    public void setup(Activity activity) {
+    public static void setup(Activity activity) {
         sharedPreferences = activity.getPreferences(Context.MODE_PRIVATE);
         id = sharedPreferences.getString(ID_KEY, UUID.randomUUID().toString());
         firstName = sharedPreferences.getString(FIRST_NAME_KEY, null);
@@ -37,7 +32,7 @@ public class TarsoUser {
         firstTime = sharedPreferences.getBoolean(FIRST_TIME_KEY, true);
     }
 
-    public void save() {
+    public static void save() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(ID_KEY, id);
         editor.putString(FIRST_NAME_KEY, firstName);

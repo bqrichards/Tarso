@@ -25,10 +25,10 @@ public class SetupActivity extends AppCompatActivity {
                 String teamName = teamNameEditText.getText().toString();
                 int teamNumber = Integer.parseInt(teamNumberEditText.getText().toString());
 
-                TarsoUser.getInstance().firstName = firstName;
-                TarsoUser.getInstance().teamName = teamName;
-                TarsoUser.getInstance().teamNumber = teamNumber;
-                TarsoUser.getInstance().save();
+                TarsoUser.firstName = firstName;
+                TarsoUser.teamName = teamName;
+                TarsoUser.teamNumber = teamNumber;
+                TarsoUser.save();
 
                 setResult(1);
                 finish();

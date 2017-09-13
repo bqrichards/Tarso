@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private FloatingActionButton addFloatingActionButton;
-    TarsoUser user;
+    private TarsoDbHelper dbHelper = new TarsoDbHelper(this);
 
     private Fragment[] fragments = {new ViewFragment(), new AddFragment()};
 
@@ -72,10 +72,9 @@ public class MainActivity extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) {}
         });
 
-        user = TarsoUser.getInstance();
-        user.setup(this);
+        TarsoUser.setup(this);
 
-        if (user.firstTime) {
+        if (TarsoUser.firstTime) {
             Intent setupIntent = new Intent(MainActivity.this, SetupActivity.class);
             startActivityForResult(setupIntent, 1);
         } else {
@@ -84,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void welcomeUser() {
-        String welcome = "Welcome, " + TarsoUser.getInstance().firstName + "!";
+        String welcome = "Welcome, " + TarsoUser.firstName + "!";
         Toast.makeText(this, welcome, Toast.LENGTH_SHORT).show();
     }
 

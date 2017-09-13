@@ -9,7 +9,7 @@
     tools:context="com.ftc5466.tarso.MainActivity$PlaceholderFragment">
 
     <ExpandableListView
-        android:id="@+id/expandable_list_view_data_content"
+        android:id="@+id/team_view_expandable_list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </RelativeLayout>
