@@ -45,9 +45,37 @@ public class TarsoDbHelper extends SQLiteOpenHelper {
         return results;
     }
 
-    public boolean deleteTeamByName(String name) {
+    public TeamEntryInstance getTeamByName(String name) {
         String selection = TarsoContract.TeamEntry.COLUMN_NAME_TEAM_NAME + " = ?";
         String[] selectionArgs = {name};
+        Cursor cursor = getReadableDatabase().query(TarsoContract.TeamEntry.TABLE_NAME, null, selection, selectionArgs, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            return new TeamEntryInstance(cursor);
+        } else {
+            return null;
+        }
+    }
+
+    public TeamEntryInstance getTeamByNumber(int number) {
+        String selection = TarsoContract.TeamEntry.COLUMN_NAME_TEAM_NUMBER + " = ?";
+        String[] selectionArgs = {String.valueOf(number)};
+        Cursor cursor = getReadableDatabase().query(TarsoContract.TeamEntry.TABLE_NAME, null, selection, selectionArgs, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            return new TeamEntryInstance(cursor);
+        } else {
+            return null;
+        }
+    }
+
+    public boolean teamExists(int teamName) {
+        return getTeamByNumber(teamName) != null;
+    }
+
+    public boolean deleteTeamByName(String teamName) {
+        String selection = TarsoContract.TeamEntry.COLUMN_NAME_TEAM_NAME + " = ?";
+        String[] selectionArgs = {teamName};
         return getWritableDatabase().delete(TarsoContract.TeamEntry.TABLE_NAME, selection, selectionArgs) > 0;
     }
 }

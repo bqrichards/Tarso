@@ -24,7 +24,6 @@ import java.util.List;
 
 public class ViewFragment extends Fragment {
     private ArrayList<TeamEntryInstance> listData;
-    private ExpandableListView teamListView;
     private TeamViewExpandableListAdapter adapter;
 
     @Nullable
@@ -34,7 +33,7 @@ public class ViewFragment extends Fragment {
 
         refreshData();
 
-        teamListView = view.findViewById(R.id.team_view_expandable_list_view);
+        ExpandableListView teamListView = view.findViewById(R.id.team_view_expandable_list_view);
         adapter = new TeamViewExpandableListAdapter();
         teamListView.setAdapter(adapter);
 
@@ -52,7 +51,7 @@ public class ViewFragment extends Fragment {
                         String toastMessage;
                         int toastLength;
                         if (new TarsoDbHelper(getContext()).deleteTeamByName(teamName)) {
-                            toastMessage = "Successfully deleted" + teamName + ".";
+                            toastMessage = "Successfully deleted team " + teamName + ".";
                             toastLength = Toast.LENGTH_SHORT;
                             refreshData();
                         } else {

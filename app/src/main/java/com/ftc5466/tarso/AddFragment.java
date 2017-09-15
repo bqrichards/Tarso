@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.ftc5466.tarso.db.TarsoContract;
 import com.ftc5466.tarso.db.TarsoDbHelper;
+import com.ftc5466.tarso.db.TeamEntryInstance;
 
 public class AddFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
     /* View Elements */
@@ -70,6 +72,28 @@ public class AddFragment extends Fragment implements CompoundButton.OnCheckedCha
         balanceEndCheckBox = view.findViewById(R.id.endgame_balanced_end_checkbox);
         /* Done setting up View Elements*/
 
+        teamNameEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (!hasFocus) {
+                    // Team lookup
+                    if (!teamNameEditText.getText().toString().isEmpty())
+                        attemptFillByName(teamNameEditText.getText().toString());
+                }
+            }
+        });
+
+        teamNumberEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (!hasFocus) {
+                    // Team lookup
+                    if (!teamNumberEditText.getText().toString().isEmpty())
+                        attemptFillByNumber(Integer.parseInt(teamNumberEditText.getText().toString()));
+                }
+            }
+        });
+
         clear();
 
         recoverRelicCheckBox.setOnCheckedChangeListener(this);
@@ -89,6 +113,63 @@ public class AddFragment extends Fragment implements CompoundButton.OnCheckedCha
     public void requestAdd() {
         String toastMessage = appendToDatabase();
         Toast.makeText(getContext(), toastMessage, Toast.LENGTH_SHORT).show();
+    }
+
+    private void attemptFillByName(String teamName) {
+        TeamEntryInstance instance = new TarsoDbHelper(getContext()).getTeamByName(teamName);
+
+        if (instance != null) {
+            // Fill
+            fillFromTeamInstance(instance);
+        } else {
+            Log.i("Tarso", "Couldn't find team by name " + teamName);
+        }
+    }
+
+    private void attemptFillByNumber(int teamNumber) {
+        TeamEntryInstance instance = new TarsoDbHelper(getContext()).getTeamByNumber(teamNumber);
+
+        if (instance != null) {
+            // Fill
+            fillFromTeamInstance(instance);
+        } else {
+            Log.i("Tarso", "Couldn't find team by number " + teamNumber);
+        }
+    }
+
+    private void fillFromTeamInstance(TeamEntryInstance instance) {
+        // Team
+        teamNameEditText.setText(instance.teamName);
+        teamNumberEditText.setText(String.valueOf(instance.teamNumber));
+
+        // Autonomous
+        knockJewelCheckBox.setChecked(instance.canKnockJewel);
+        scanPictographCheckBox.setChecked(instance.canScanPictograph);
+        numberOfAutonomousGlyphsEditText.setText(String.valueOf(instance.numberOfAutonomousGlyphsScored));
+        safeZoneCheckBox.setChecked(instance.parksInSafeZone);
+
+        // TeleOp
+        numberOfTeleOpGlyphsEditText.setText(String.valueOf(instance.numberOfTeleOpGlyphsScored));
+        glyphsStrategyTeleOp[0].setChecked(instance.rowsStrategy);
+        glyphsStrategyTeleOp[1].setChecked(instance.columnsStrategy);
+
+        // End Game
+        recoverRelicCheckBox.setChecked(instance.canRecoverRelic);
+        if (instance.canRecoverRelic) {
+            relicUprightCheckBox.setEnabled(true);
+            relicUprightCheckBox.setChecked(instance.relicUpright);
+
+            // Enable all
+            for (CheckBox checkBox : relicRecoveryZones) {
+                checkBox.setEnabled(true);
+            }
+
+            relicRecoveryZones[0].setChecked(instance.zone1);
+            relicRecoveryZones[1].setChecked(instance.zone2);
+            relicRecoveryZones[2].setChecked(instance.zone3);
+        }
+
+        balanceEndCheckBox.setChecked(instance.balanceAtEnd);
     }
 
     private String appendToDatabase() {
@@ -166,9 +247,14 @@ public class AddFragment extends Fragment implements CompoundButton.OnCheckedCha
         values.put(TarsoContract.TeamEntry.COLUMN_NAME_ENDGAME_RELIC_ZONE_3, thirdRelicZone);
         values.put(TarsoContract.TeamEntry.COLUMN_NAME_ENDGAME_BALANCE, balancedAtEnd);
 
-        long newRowId = db.insert(TarsoContract.TeamEntry.TABLE_NAME, null, values);
+        boolean teamExists = new TarsoDbHelper(getContext()).teamExists(teamNumber);
+        if (teamExists) {
+            db.update(TarsoContract.TeamEntry.TABLE_NAME, values, null, null);
+        } else {
+            db.insert(TarsoContract.TeamEntry.TABLE_NAME, null, values);
+        }
 
-        return "Success - Added row " + newRowId;
+        return teamExists ? "Success - Updated team " + teamNumber : "Success - Added team " + teamNumber;
     }
 
     // Please forgive me.
