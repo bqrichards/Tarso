@@ -4,10 +4,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class TarsoDbHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
@@ -34,7 +32,7 @@ public class TarsoDbHelper extends SQLiteOpenHelper {
     }
 
     public ArrayList<TeamEntryInstance> getAllTeamEntries() {
-        Cursor cursor = getReadableDatabase().rawQuery("SELECT * FROM " + TarsoContract.TeamEntry.TABLE_NAME, null);
+        Cursor cursor = getReadableDatabase().query(TarsoContract.TeamEntry.TABLE_NAME, null, null, null, null, null, null);
         ArrayList<TeamEntryInstance> results = new ArrayList<>();
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
