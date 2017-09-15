@@ -6,11 +6,59 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Autonomous" />
+        android:text="Autonomous"
+        android:textSize="16sp"
+        android:paddingStart="34dp"
+        android:paddingEnd="34dp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/list_item_can_knock_jewel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:paddingStart="34dp"
+        android:paddingEnd="34dp"
+        android:text="Can Knock Jewel: " />
+
+    <TextView
+        android:id="@+id/list_item_can_scan_pictograph"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="34dp"
+        android:paddingEnd="34dp"
+        android:text="Can Scan Pictograph: " />
+
+    <TextView
+        android:id="@+id/list_item_autonomous_number_of_glyphs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="34dp"
+        android:paddingEnd="34dp"
+        android:text="Avg number of Glyphs: " />
+
+    <TextView
+        android:id="@+id/list_item_autonomous_parks_in_safe_zone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="34dp"
+        android:paddingEnd="34dp"
+        android:text="Parks in Safe Zone: " />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TeleOp"
+        android:textSize="16sp"
+        android:paddingStart="34dp"
+        android:paddingEnd="34dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="End Game"
+        android:textSize="16sp"
+        android:paddingStart="34dp"
+        android:paddingEnd="34dp"
+        android:textStyle="bold" />
 </LinearLayout>

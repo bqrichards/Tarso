@@ -38,20 +38,18 @@ public class TarsoDbHelper extends SQLiteOpenHelper {
         ArrayList<TeamEntryInstance> results = new ArrayList<>();
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
-                String teamName = cursor.getString(cursor.getColumnIndex(TarsoContract.TeamEntry.COLUMN_NAME_TEAM_NAME));
-                int teamNumber = cursor.getInt(cursor.getColumnIndex(TarsoContract.TeamEntry.COLUMN_NAME_TEAM_NUMBER));
-
-                // Autonomous
-                boolean canKnockJewel = cursor.getInt(cursor.getColumnIndex(TarsoContract.TeamEntry.COLUMN_NAME_AUTONOMOUS_CAN_KNOCK_JEWEL)) == 1;
-
-                TeamEntryInstance instance = new TeamEntryInstance(teamName, teamNumber);
-                instance.canKnockJewel = canKnockJewel;
-                results.add(instance);
+                results.add(new TeamEntryInstance(cursor));
                 cursor.moveToNext();
             }
         }
 
         cursor.close();
         return results;
+    }
+
+    public boolean deleteTeamByName(String name) {
+        String selection = TarsoContract.TeamEntry.COLUMN_NAME_TEAM_NAME + " = ?";
+        String[] selectionArgs = {name};
+        return getWritableDatabase().delete(TarsoContract.TeamEntry.TABLE_NAME, selection, selectionArgs) > 0;
     }
 }
