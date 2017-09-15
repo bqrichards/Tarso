@@ -102,7 +102,6 @@ public class AddFragment extends Fragment implements CompoundButton.OnCheckedCha
             return "Error - Team Number Empty";
         }
 
-
         // Autonomous
         int canKnockJewel = bool(knockJewelCheckBox.isChecked());
         int canScanPictograph = bool(scanPictographCheckBox.isChecked());
@@ -124,7 +123,7 @@ public class AddFragment extends Fragment implements CompoundButton.OnCheckedCha
         int targetRows = bool(glyphsStrategyTeleOp[0].isChecked());
         int targetColumns = bool(glyphsStrategyTeleOp[1].isChecked());
 
-        // End Game - TODO
+        // End Game
         int canRecoverRelic = bool(recoverRelicCheckBox.isChecked());
         int relicUpright = bool(relicUprightCheckBox.isChecked());
         int firstRelicZone = bool(relicRecoveryZones[0].isChecked());
@@ -159,7 +158,7 @@ public class AddFragment extends Fragment implements CompoundButton.OnCheckedCha
         values.put(TarsoContract.TeamEntry.COLUMN_NAME_TELEOP_GLYPH_STRATEGY_ROWS, targetRows);
         values.put(TarsoContract.TeamEntry.COLUMN_NAME_TELEOP_GLYPH_STRATEGY_COLUMNS, targetColumns);
 
-        // EndGame
+        // End Game
         values.put(TarsoContract.TeamEntry.COLUMN_NAME_ENDGAME_CAN_RECOVER_RELIC, canRecoverRelic);
         values.put(TarsoContract.TeamEntry.COLUMN_NAME_ENDGAME_RELIC_UPRIGHT, relicUpright);
         values.put(TarsoContract.TeamEntry.COLUMN_NAME_ENDGAME_RELIC_ZONE_1, firstRelicZone);

@@ -44,6 +44,10 @@
         android:paddingEnd="34dp"
         android:text="Parks in Safe Zone: " />
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="12dp" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -54,11 +58,73 @@
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/list_item_teleop_number_of_glyphs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="End Game"
-        android:textSize="16sp"
         android:paddingStart="34dp"
         android:paddingEnd="34dp"
+        android:text="Avg number of Glyphs: " />
+
+    <TextView
+        android:id="@+id/list_item_teleop_columns_strategy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="34dp"
+        android:paddingEnd="34dp"
+        android:text="Rows strategy: " />
+
+    <TextView
+        android:id="@+id/list_item_teleop_rows_strategy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="34dp"
+        android:paddingEnd="34dp"
+        android:text="Columns strategy: " />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="12dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingEnd="34dp"
+        android:paddingStart="34dp"
+        android:text="End Game"
+        android:textSize="16sp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/list_item_endgame_can_recover_relic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="34dp"
+        android:paddingEnd="34dp"
+        android:text="Can recover relic: " />
+
+    <TextView
+        android:id="@+id/list_item_endgame_relic_upright"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="34dp"
+        android:paddingEnd="34dp"
+        android:text="Relic upright: " />
+
+    <TextView
+        android:id="@+id/list_item_endgame_zone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="34dp"
+        android:paddingEnd="34dp"
+        android:text="Zones: " />
+
+    <TextView
+        android:id="@+id/list_item_endgame_balance_at_end"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="34dp"
+        android:paddingEnd="34dp"
+        android:text="Balanced at end: " />
+
 </LinearLayout>

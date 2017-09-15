@@ -32,15 +32,11 @@ public class ViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_view, container, false);
 
-        listData = new TarsoDbHelper(getContext()).getAllTeamEntries();
+        refreshData();
 
         teamListView = view.findViewById(R.id.team_view_expandable_list_view);
         adapter = new TeamViewExpandableListAdapter();
         teamListView.setAdapter(adapter);
-
-        // TODO - remove after debug. expands everything
-        for (int i = 0; i < adapter.getGroupCount(); i++)
-            teamListView.expandGroup(i);
 
         teamListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -58,8 +54,7 @@ public class ViewFragment extends Fragment {
                         if (new TarsoDbHelper(getContext()).deleteTeamByName(teamName)) {
                             toastMessage = "Successfully deleted" + teamName + ".";
                             toastLength = Toast.LENGTH_SHORT;
-                            listData = new TarsoDbHelper(getContext()).getAllTeamEntries();
-                            adapter.notifyDataSetChanged();
+                            refreshData();
                         } else {
                             toastMessage = "Uh oh, something went wrong. Check the logs?";
                             toastLength = Toast.LENGTH_LONG;
@@ -77,6 +72,13 @@ public class ViewFragment extends Fragment {
         });
 
         return view;
+    }
+
+    public void refreshData() {
+        listData = new TarsoDbHelper(getContext()).getAllTeamEntries();
+
+        if (adapter != null)
+            adapter.notifyDataSetChanged();
     }
 
     private class TeamViewExpandableListAdapter extends BaseExpandableListAdapter {
@@ -146,15 +148,41 @@ public class ViewFragment extends Fragment {
                 view = inflater.inflate(R.layout.list_item, null);
             }
 
+            /* Grab View Elements */
+            // Autonomous
             TextView canKnockJewelTextView = view.findViewById(R.id.list_item_can_knock_jewel);
             TextView canScanPictographTextView = view.findViewById(R.id.list_item_can_scan_pictograph);
             TextView avgNumberOfAutonomousGlyphsTextView = view.findViewById(R.id.list_item_autonomous_number_of_glyphs);
             TextView parksInAutonomousSafeZone = view.findViewById(R.id.list_item_autonomous_parks_in_safe_zone);
 
+            // TeleOp
+            TextView avgNumberOfTeleOpGlyphsTextView = view.findViewById(R.id.list_item_teleop_number_of_glyphs);
+            TextView rowsStrategyTextView = view.findViewById(R.id.list_item_teleop_rows_strategy);
+            TextView columnsStrategyTextView = view.findViewById(R.id.list_item_teleop_columns_strategy);
+
+            // End Game
+            TextView canRecoverRelicTextView = view.findViewById(R.id.list_item_endgame_can_recover_relic);
+            TextView relicUprightTextView = view.findViewById(R.id.list_item_endgame_relic_upright);
+            TextView zonesTextView = view.findViewById(R.id.list_item_endgame_zone);
+            TextView balancedAtEndTextView = view.findViewById(R.id.list_item_endgame_balance_at_end);
+
+            /* Set Text */
+            // Autonomous
             canKnockJewelTextView.setText(childText.get(0));
             canScanPictographTextView.setText(childText.get(1));
             avgNumberOfAutonomousGlyphsTextView.setText(childText.get(2));
             parksInAutonomousSafeZone.setText(childText.get(3));
+
+            // TeleOp
+            avgNumberOfTeleOpGlyphsTextView.setText(childText.get(4));
+            rowsStrategyTextView.setText(childText.get(5));
+            columnsStrategyTextView.setText(childText.get(6));
+
+            // End Game
+            canRecoverRelicTextView.setText(childText.get(7));
+            relicUprightTextView.setText(childText.get(8));
+            zonesTextView.setText(childText.get(9));
+            balancedAtEndTextView.setText(childText.get(10));
 
             return view;
         }

@@ -17,13 +17,10 @@ import android.view.View;
 
 import android.widget.Toast;
 
-import com.ftc5466.tarso.db.TarsoDbHelper;
-
 public class MainActivity extends AppCompatActivity {
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private FloatingActionButton addFloatingActionButton;
-    private TarsoDbHelper dbHelper = new TarsoDbHelper(this);
 
     private Fragment[] fragments = {new ViewFragment(), new AddFragment()};
 
@@ -47,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ((AddFragment)fragments[1]).requestAdd();
+                ((ViewFragment)fragments[0]).refreshData();
             }
         });
 
