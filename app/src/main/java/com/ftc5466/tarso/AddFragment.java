@@ -1,14 +1,19 @@
 package com.ftc5466.tarso;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -18,11 +23,14 @@ import com.ftc5466.tarso.db.TarsoContract;
 import com.ftc5466.tarso.db.TarsoDbHelper;
 import com.ftc5466.tarso.db.TeamEntryInstance;
 
+import java.nio.charset.Charset;
+
 public class AddFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
     /* View Elements */
     // Team
     EditText teamNameEditText;
     EditText teamNumberEditText;
+    Button autoFillButton;
 
     // Autonomous
     CheckBox knockJewelCheckBox;
@@ -40,15 +48,22 @@ public class AddFragment extends Fragment implements CompoundButton.OnCheckedCha
     CheckBox[] relicRecoveryZones = new CheckBox[3];
     CheckBox balanceEndCheckBox;
 
+    /* AutoFill Types */
+    private TeamEntryInstance autoFillTeamEntryInstance;
+    private static final int AUTO_FILL_TYPE_NAME = 0;
+    private static final int AUTO_FILL_TYPE_NUMBER = 1;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_add, container, false);
+        final View view = inflater.inflate(R.layout.fragment_add, container, false);
 
         /* View Elements */
         // Team
         teamNameEditText = view.findViewById(R.id.team_name_edittext);
         teamNumberEditText = view.findViewById(R.id.team_number_edittext);
+        autoFillButton = view.findViewById(R.id.button_autofill);
+        autoFillButton.setVisibility(View.GONE);
 
         // Autonomous
         knockJewelCheckBox = view.findViewById(R.id.autonomous_knock_jewl_checkbox);
@@ -72,25 +87,18 @@ public class AddFragment extends Fragment implements CompoundButton.OnCheckedCha
         balanceEndCheckBox = view.findViewById(R.id.endgame_balanced_end_checkbox);
         /* Done setting up View Elements*/
 
-        teamNameEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        teamNameEditText.addTextChangedListener(new AutoFillTextWatcher(AUTO_FILL_TYPE_NAME));
+        teamNumberEditText.addTextChangedListener(new AutoFillTextWatcher(AUTO_FILL_TYPE_NUMBER));
+        autoFillButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if (!hasFocus) {
-                    // Team lookup
-                    if (!teamNameEditText.getText().toString().isEmpty())
-                        attemptFillByName(teamNameEditText.getText().toString());
-                }
-            }
-        });
+            public void onClick(View buttonView) {
+                // Auto-Fill
+                fillFromTeamInstance(autoFillTeamEntryInstance);
+                autoFillTeamEntryInstance = null;
+                autoFillButton.setVisibility(View.GONE);
 
-        teamNumberEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if (!hasFocus) {
-                    // Team lookup
-                    if (!teamNumberEditText.getText().toString().isEmpty())
-                        attemptFillByNumber(Integer.parseInt(teamNumberEditText.getText().toString()));
-                }
+                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
         });
 
@@ -104,9 +112,14 @@ public class AddFragment extends Fragment implements CompoundButton.OnCheckedCha
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
         relicUprightCheckBox.setEnabled(isChecked);
+        if (!isChecked)
+            relicUprightCheckBox.setChecked(false);
 
         for (CheckBox checkBox : relicRecoveryZones) {
             checkBox.setEnabled(isChecked);
+
+            if (!isChecked)
+                checkBox.setChecked(false);
         }
     }
 
@@ -115,29 +128,10 @@ public class AddFragment extends Fragment implements CompoundButton.OnCheckedCha
         Toast.makeText(getContext(), toastMessage, Toast.LENGTH_SHORT).show();
     }
 
-    private void attemptFillByName(String teamName) {
-        TeamEntryInstance instance = new TarsoDbHelper(getContext()).getTeamByName(teamName);
-
-        if (instance != null) {
-            // Fill
-            fillFromTeamInstance(instance);
-        } else {
-            Log.i("Tarso", "Couldn't find team by name " + teamName);
-        }
-    }
-
-    private void attemptFillByNumber(int teamNumber) {
-        TeamEntryInstance instance = new TarsoDbHelper(getContext()).getTeamByNumber(teamNumber);
-
-        if (instance != null) {
-            // Fill
-            fillFromTeamInstance(instance);
-        } else {
-            Log.i("Tarso", "Couldn't find team by number " + teamNumber);
-        }
-    }
-
     private void fillFromTeamInstance(TeamEntryInstance instance) {
+        if (instance == null)
+            return;
+
         // Team
         teamNameEditText.setText(instance.teamName);
         teamNumberEditText.setText(String.valueOf(instance.teamNumber));
@@ -290,5 +284,48 @@ public class AddFragment extends Fragment implements CompoundButton.OnCheckedCha
         }
 
         balanceEndCheckBox.setChecked(false);
+    }
+
+    private class AutoFillTextWatcher implements TextWatcher {
+        private int type;
+
+        AutoFillTextWatcher(int autoFillType) {
+            this.type = autoFillType;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            TeamEntryInstance instance = null;
+
+            if (type == AUTO_FILL_TYPE_NAME) {
+                instance = attemptAutoFillByName(charSequence.toString());
+            } else {
+                try {
+                    instance = attemptAutoFillByNumber(Integer.parseInt(charSequence.toString()));
+                } catch (NumberFormatException ignored) {}
+            }
+
+            if (instance != null) {
+                autoFillButton.setVisibility(View.VISIBLE);
+                autoFillTeamEntryInstance = instance;
+            } else {
+                autoFillButton.setVisibility(View.GONE);
+                autoFillTeamEntryInstance = null;
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {}
+
+        private TeamEntryInstance attemptAutoFillByName(String teamName) {
+            return new TarsoDbHelper(getContext()).getTeamByName(teamName);
+        }
+
+        private TeamEntryInstance attemptAutoFillByNumber(int teamNumber) {
+            return new TarsoDbHelper(getContext()).getTeamByNumber(teamNumber);
+        }
     }
 }
