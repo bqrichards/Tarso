@@ -8,11 +8,20 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 
 public class TarsoDbHelper extends SQLiteOpenHelper {
-    public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "Tarso.db";
+    private static TarsoDbHelper INSTANCE;
+    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = "Tarso.db";
 
-    public TarsoDbHelper(Context context) {
+    private TarsoDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
+    public static void initWithContext(Context context) {
+        INSTANCE = new TarsoDbHelper(context);
+    }
+
+    public static TarsoDbHelper getInstance() {
+        return INSTANCE;
     }
 
     @Override
@@ -48,24 +57,26 @@ public class TarsoDbHelper extends SQLiteOpenHelper {
     public TeamEntryInstance getTeamByName(String name) {
         String selection = TarsoContract.TeamEntry.COLUMN_NAME_TEAM_NAME + " = ?";
         String[] selectionArgs = {name};
-        Cursor cursor = getReadableDatabase().query(TarsoContract.TeamEntry.TABLE_NAME, null, selection, selectionArgs, null, null, null);
 
-        if (cursor.moveToFirst()) {
-            return new TeamEntryInstance(cursor);
-        } else {
-            return null;
+        try (Cursor cursor = getReadableDatabase().query(TarsoContract.TeamEntry.TABLE_NAME, null, selection, selectionArgs, null, null, null)) {
+            if (cursor.moveToFirst()) {
+                return new TeamEntryInstance(cursor);
+            } else {
+                return null;
+            }
         }
     }
 
     public TeamEntryInstance getTeamByNumber(int number) {
         String selection = TarsoContract.TeamEntry.COLUMN_NAME_TEAM_NUMBER + " = ?";
         String[] selectionArgs = {String.valueOf(number)};
-        Cursor cursor = getReadableDatabase().query(TarsoContract.TeamEntry.TABLE_NAME, null, selection, selectionArgs, null, null, null);
 
-        if (cursor.moveToFirst()) {
-            return new TeamEntryInstance(cursor);
-        } else {
-            return null;
+        try (Cursor cursor = getReadableDatabase().query(TarsoContract.TeamEntry.TABLE_NAME, null, selection, selectionArgs, null, null, null)) {
+            if (cursor.moveToFirst()) {
+                return new TeamEntryInstance(cursor);
+            } else {
+                return null;
+            }
         }
     }
 

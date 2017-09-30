@@ -17,6 +17,8 @@ import android.view.View;
 
 import android.widget.Toast;
 
+import com.ftc5466.tarso.db.TarsoDbHelper;
+
 public class MainActivity extends AppCompatActivity {
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
@@ -37,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        TarsoDbHelper.initWithContext(this);
 
         addFloatingActionButton = (FloatingActionButton)findViewById(R.id.add_floatingActionButton);
         addFloatingActionButton.setVisibility(View.GONE);

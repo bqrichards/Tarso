@@ -6,7 +6,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/activity_horizontal_margin">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,15 +22,15 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Team"
-                    android:textSize="24dp" />
+                    android:text="@string/team"
+                    android:textSize="24sp" />
 
                 <EditText
                     android:id="@+id/team_name_edittext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="Team Name"
+                    android:hint="@string/team_name"
                     android:inputType="text" />
 
                 <EditText
@@ -37,8 +38,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="Team Number"
+                    android:hint="@string/team_number"
                     android:inputType="number" />
+
+                <Button
+                    android:id="@+id/button_autofill"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/auto_fill" />
 
             </LinearLayout>
 
@@ -54,34 +61,34 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Autonomous"
-                    android:textSize="24dp" />
+                    android:text="@string/autonomous"
+                    android:textSize="24sp" />
 
                 <CheckBox
                     android:id="@+id/autonomous_knock_jewl_checkbox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Can knock Jewel" />
+                    android:text="@string/can_knock_jewel" />
 
                 <CheckBox
                     android:id="@+id/autonomous_scan_pictograph_checkbox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Can scan Pictograph" />
+                    android:text="@string/can_scan_pictograph" />
 
                 <EditText
                     android:id="@+id/autonomous_glyphs_in_cryptograph_editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="Number of Glyphs scored"
+                    android:hint="@string/number_of_glyphs_scored"
                     android:inputType="number" />
 
                 <CheckBox
                     android:id="@+id/autonomous_park_safe_zone_checkbox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Parks in safe zone" />
+                    android:text="@string/parks_in_safe_zone" />
 
             </LinearLayout>
 
@@ -97,20 +104,20 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TeleOp"
-                    android:textSize="24dp" />
+                    android:text="@string/teleop"
+                    android:textSize="24sp" />
 
                 <EditText
                     android:id="@+id/teleop_glyphs_scored_editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="Number of Glyphs scored"
+                    android:hint="@string/number_of_glyphs_scored"
                     android:inputType="number" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="0dp"
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
@@ -119,14 +126,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Rows" />
+                        android:text="@string/rows" />
 
                     <CheckBox
                         android:id="@+id/teleop_columns_checkbox"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Columns" />
+                        android:text="@string/columns" />
 
                 </LinearLayout>
 
@@ -145,8 +152,8 @@
                     android:id="@+id/textView4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="End Game"
-                    android:textSize="24dp" />
+                    android:text="@string/end_game"
+                    android:textSize="24sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -158,20 +165,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Can recover relic" />
+                        android:text="@string/can_recover_relic" />
 
                     <CheckBox
                         android:id="@+id/endgame_relic_upright"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Relic upright?" />
+                        android:text="@string/relic_upright" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="0dp"
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
@@ -180,28 +187,28 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="10" />
+                        android:text="@string/zone_1" />
 
                     <CheckBox
                         android:id="@+id/endgame_relic_zone_20"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="20" />
+                        android:text="@string/zone_2" />
 
                     <CheckBox
                         android:id="@+id/endgame_relic_zone_40"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="40" />
+                        android:text="@string/zone_3" />
                 </LinearLayout>
 
                 <CheckBox
                     android:id="@+id/endgame_balanced_end_checkbox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Balance at end" />
+                    android:text="@string/balanced_at_end" />
             </LinearLayout>
 
             <Space
