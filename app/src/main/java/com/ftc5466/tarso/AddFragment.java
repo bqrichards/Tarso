@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +21,6 @@ import android.widget.Toast;
 import com.ftc5466.tarso.db.TarsoContract;
 import com.ftc5466.tarso.db.TarsoDbHelper;
 import com.ftc5466.tarso.db.TeamEntryInstance;
-
-import java.nio.charset.Charset;
 
 public class AddFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
     /* View Elements */
@@ -215,7 +212,7 @@ public class AddFragment extends Fragment implements CompoundButton.OnCheckedCha
         clear();
 
         // Add to database
-        SQLiteDatabase db = new TarsoDbHelper(getContext()).getWritableDatabase();
+        SQLiteDatabase db = TarsoDbHelper.getInstance().getWritableDatabase();
 
         ContentValues values = new ContentValues();
         // Team
@@ -241,7 +238,7 @@ public class AddFragment extends Fragment implements CompoundButton.OnCheckedCha
         values.put(TarsoContract.TeamEntry.COLUMN_NAME_ENDGAME_RELIC_ZONE_3, thirdRelicZone);
         values.put(TarsoContract.TeamEntry.COLUMN_NAME_ENDGAME_BALANCE, balancedAtEnd);
 
-        boolean teamExists = new TarsoDbHelper(getContext()).teamExists(teamNumber);
+        boolean teamExists = TarsoDbHelper.getInstance().teamExists(teamNumber);
         if (teamExists) {
             db.update(TarsoContract.TeamEntry.TABLE_NAME, values, null, null);
         } else {
@@ -321,11 +318,11 @@ public class AddFragment extends Fragment implements CompoundButton.OnCheckedCha
         public void afterTextChanged(Editable editable) {}
 
         private TeamEntryInstance attemptAutoFillByName(String teamName) {
-            return new TarsoDbHelper(getContext()).getTeamByName(teamName);
+            return TarsoDbHelper.getInstance().getTeamByName(teamName);
         }
 
         private TeamEntryInstance attemptAutoFillByNumber(int teamNumber) {
-            return new TarsoDbHelper(getContext()).getTeamByNumber(teamNumber);
+            return TarsoDbHelper.getInstance().getTeamByNumber(teamNumber);
         }
     }
 }

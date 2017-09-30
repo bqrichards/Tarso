@@ -50,7 +50,7 @@ public class ViewFragment extends Fragment {
 
                         String toastMessage;
                         int toastLength;
-                        if (new TarsoDbHelper(getContext()).deleteTeamByName(teamName)) {
+                        if (TarsoDbHelper.getInstance().deleteTeamByName(teamName)) {
                             toastMessage = "Successfully deleted team " + teamName + ".";
                             toastLength = Toast.LENGTH_SHORT;
                             refreshData();
@@ -74,7 +74,7 @@ public class ViewFragment extends Fragment {
     }
 
     public void refreshData() {
-        listData = new TarsoDbHelper(getContext()).getAllTeamEntries();
+        listData = TarsoDbHelper.getInstance().getAllTeamEntries();
 
         if (adapter != null)
             adapter.notifyDataSetChanged();
@@ -84,7 +84,7 @@ public class ViewFragment extends Fragment {
         private List<String> _listDataHeader;
         private HashMap<String, List<String>> _listDataChildren;
 
-        public TeamViewExpandableListAdapter() {
+        private TeamViewExpandableListAdapter() {
             craftData();
         }
 
