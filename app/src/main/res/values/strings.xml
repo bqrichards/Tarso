@@ -2,4 +2,23 @@
     <string name="app_name">Tarso</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="team">Team</string>
+    <string name="team_name">Team Name</string>
+    <string name="team_number">Team Number</string>
+    <string name="auto_fill">Auto-fill</string>
+    <string name="autonomous">Autonomous</string>
+    <string name="can_knock_jewel">Can knock Jewel</string>
+    <string name="can_scan_pictograph">Can scan Pictograph</string>
+    <string name="number_of_glyphs_scored">Number of Glyphs scored</string>
+    <string name="teleop">TeleOp</string>
+    <string name="rows">Rows</string>
+    <string name="columns">Columns</string>
+    <string name="end_game">End Game</string>
+    <string name="can_recover_relic">Can recover relic</string>
+    <string name="relic_upright">Relic upright?</string>
+    <string name="zone_3">40</string>
+    <string name="zone_2">20</string>
+    <string name="zone_1">10</string>
+    <string name="balanced_at_end">Balanced at end</string>
+    <string name="parks_in_safe_zone">Parks in safe zone</string>
 </resources>
